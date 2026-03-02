@@ -1,0 +1,180 @@
+---
+import PageHeader from "./elements/PageHeader.astro"
+import SkillCard from "./elements/SkillCard.astro"
+---
+
+<section id="about">
+  <PageHeader title="About Me" number="2."/>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a <span class="highlight">Software Development student at SAIT</span>, graduating soon with a focus on systems programming, backend architecture, and graphics. I gravitate toward problems that require understanding what's happening at a low level — memory, performance, and correctness.
+      </p>
+      <p>
+        I built a <span class="highlight">3D rendering engine from scratch in Rust</span> using raw OpenGL, no game engine, no shortcuts. That project taught me more about software architecture, memory management, and debugging than anything else. I also built Playport, a real-time virtual joystick system using Linux's Uinput kernel interface over <span class="highlight">TCP/UDP</span>.
+      </p>
+      <p>
+        I write code that I'd be comfortable maintaining two years from now. I care about <span class="highlight">correctness, scalability, and intent</span> — not just making it work.
+      </p>
+
+      <div class="skills-section">
+        <p class="skills-label">// systems & graphics</p>
+        <div class="skills-grid">
+          <SkillCard name="Rust"       color="#f74c00" />
+          <SkillCard name="C++"        color="#00599c" />
+          <SkillCard name="OpenGL"     color="#5586a4" />
+          <SkillCard name="Linux"      color="#f5a623" />
+          <SkillCard name="TCP/UDP"    color="#e2e8f0" />
+        </div>
+      </div>
+
+      <div class="skills-section">
+        <p class="skills-label">// backend & data</p>
+        <div class="skills-grid">
+          <SkillCard name="Python"      color="#9b59b6" />
+          <SkillCard name="PyTorch"     color="#ee4c2c" />
+          <SkillCard name="PostgreSQL"  color="#336791" />
+          <SkillCard name="SQL"         color="#f5a623" />
+          <SkillCard name="Supabase"    color="#3ecf8e" />
+        </div>
+      </div>
+
+      <div class="skills-section">
+        <p class="skills-label">// frontend & mobile</p>
+        <div class="skills-grid">
+          <SkillCard name="TypeScript"    color="#3178c6" />
+          <SkillCard name="React"         color="#61dafb" />
+          <SkillCard name="React Native"  color="#61dafb" />
+          <SkillCard name="Kotlin"        color="#7f52ff" />
+          <SkillCard name="Java"          color="#f89820" />
+          <SkillCard name="Android"       color="#3ddc84" />
+        </div>
+      </div>
+
+      <div class="skills-section">
+        <p class="skills-label">// tools</p>
+        <div class="skills-grid">
+          <SkillCard name="Git"    color="#f05032" />
+        </div>
+      </div>
+    </div>
+
+    <div class="about-side">
+      <div class="stat-card">
+        <span class="stat-number">3+</span>
+        <span class="stat-label">Years coding</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">10+</span>
+        <span class="stat-label">Projects shipped</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">∞</span>
+        <span class="stat-label">Bugs fixed</span>
+      </div>
+      <div class="stat-card accent">
+        <span class="stat-number">2026</span>
+        <span class="stat-label">Graduating SAIT</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+section {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+p {
+  color: #8892b0;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.highlight {
+  color: #64ffda;
+  font-weight: 500;
+}
+
+.skills-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.skills-label {
+  color: rgba(100,255,218,0.4);
+  font-size: 0.75rem;
+  font-family: monospace;
+  margin: 0;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.about-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: sticky;
+  top: 6rem;
+}
+
+.stat-card {
+  background: #090c10;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(100,255,218,0.2);
+  transform: translateX(-3px);
+}
+
+.stat-card.accent {
+  border-color: rgba(100,255,218,0.2);
+  background: rgba(100,255,218,0.03);
+}
+
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #64ffda;
+  font-family: monospace;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #4a5568;
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+</style>

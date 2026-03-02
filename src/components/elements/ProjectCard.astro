@@ -1,0 +1,201 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  github?: string;
+  demo?: string;
+  featured?: boolean;
+  image?: string;
+}
+
+const { title, description, tags, github, demo, featured = false, image } = Astro.props;
+---
+
+<div class={`card ${featured ? 'featured' : ''}`}>
+  {image && (
+    <div class="card-image">
+      <img src={image} alt={title} loading="lazy" decoding="async" />
+      <div class="image-overlay"></div>
+    </div>
+  )}
+
+  <div class="card-body">
+    <div class="card-body-top">
+      <div class="title-row">
+        <h3>{title}</h3>
+        {featured && <span class="badge">featured</span>}
+      </div>
+      <p>{description}</p>
+    </div>
+
+    <div class="card-body-bottom">
+      <div class="tags">
+        {tags.map(tag => <span class="tag">{tag}</span>)}
+      </div>
+      <div class="links">
+        {github && (
+          <a href={github} target="_blank" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+          </a>
+        )}
+        {demo && (
+          <a href={demo} target="_blank" aria-label="Demo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.card {
+  display: flex;
+  flex-direction: row;
+  min-height: 120px;
+  border-radius: 10px;
+  background: #090c10;
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+.card:hover {
+  transform: translateX(4px);
+  border-color: rgba(100,255,218,0.25);
+  box-shadow: -4px 0 20px rgba(100,255,218,0.05);
+}
+
+.card.featured {
+  border-color: rgba(100,255,218,0.15);
+}
+
+.card-image {
+  position: relative;
+  width: 200px;
+  min-height: 120px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6) saturate(0.6);
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.card:hover .card-image img {
+  filter: brightness(0.85) saturate(1);
+  transform: scale(1.04);
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 60%, #090c10 100%);
+}
+
+.card-body {
+  flex: 1;
+  padding: 1.3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.card-body-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+h3 {
+  color: #e2e8f0;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.card:hover h3 {
+  color: #64ffda;
+}
+
+.badge {
+  font-size: 0.6rem;
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #64ffda;
+  border: 1px solid rgba(100,255,218,0.3);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+}
+
+p {
+  color: #4a5568;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-body-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tag {
+  font-size: 0.65rem;
+  font-family: monospace;
+  color: #64ffda;
+  background: rgba(100,255,218,0.06);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(100,255,218,0.12);
+}
+
+.links {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.links a {
+  color: #4a5568;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.links a:hover {
+  color: #64ffda;
+}
+</style>

@@ -1,0 +1,55 @@
+---
+interface Props {
+  text: string;
+  color?: string;
+}
+const { text, color = "#10B981" } = Astro.props;
+---
+
+<div class="status-badge" style={`background: ${color}18; border-color: ${color}33;`}>
+  <span class="pulse" style={`background-color: ${color};`}></span>
+  <span class="status-text" style={`color: ${color};`}>{text}</span>
+</div>
+
+<style>
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0.7); }
+  70%  { transform: scale(1);    box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+
+.status-text {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .status-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+  }
+}
+</style>

@@ -1,0 +1,148 @@
+---
+interface Props {
+  phrases: string[];
+  path?: string;
+  branch?: string;
+}
+const { phrases, path = "~/portfolio", branch = "main" } = Astro.props;
+---
+
+<div class="terminal">
+  <div class="terminal-header">
+    <div class="dots">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+    <span class="terminal-title">youssif@systems-arch:~</span>
+    <div class="spacer"></div>
+  </div>
+  <div class="terminal-body">
+    <span class="prompt-path">{path}</span>
+    <span class="prompt-branch">git:({branch})</span>
+    <span class="prompt-symbol">$</span>
+    <span id="tw" class="typewriter"></span><span class="cursor">_</span>
+  </div>
+</div>
+
+<script define:vars={{ phrases }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById("tw");
+    if (!el) return;
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function tick() {
+      const current = phrases[phraseIndex];
+      if (!deleting) {
+        charIndex++;
+        el.textContent = current.slice(0, charIndex);
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(tick, 2000);
+          return;
+        }
+      } else {
+        charIndex--;
+        el.textContent = current.slice(0, charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          let next;
+          do { next = Math.floor(Math.random() * phrases.length); } while (next === phraseIndex);
+          phraseIndex = next;
+        }
+      }
+      setTimeout(tick, deleting ? 20 : 50);
+    }
+
+    setTimeout(tick, 500);
+  });
+</script>
+
+<style>
+.terminal {
+  background: #0a0f1a;
+  border: 1px solid #1e2d40;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.terminal-header {
+  background: #111827;
+  padding: 0.55rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-bottom: 1px solid #1e2d40;
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot.red    { background: #ff5f57; }
+.dot.yellow { background: #febc2e; }
+.dot.green  { background: #28c840; }
+
+.terminal-title {
+  margin-left: 0.75rem;
+  color: #3d5166;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spacer { flex: 1; }
+
+.terminal-body {
+  padding: 1rem 1.2rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  min-height: 3rem;
+}
+
+.prompt-path   { color: #3B82F6; font-weight: 600; }
+.prompt-branch { color: #10B981; }
+.prompt-symbol { color: #e2e8f0; }
+.typewriter    { color: #e2e8f0; }
+
+.cursor {
+  color: #3B82F6;
+  font-weight: bold;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  .terminal-body {
+    font-size: 0.78rem;
+    padding: 0.85rem 1rem;
+  }
+
+  .terminal-title {
+    font-size: 0.65rem;
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+  }
+}
+</style>

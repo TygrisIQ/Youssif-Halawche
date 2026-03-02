@@ -1,0 +1,38 @@
+---
+interface Props {
+  name: string;
+  color?: string;
+}
+
+const { name, color = "#ffffff" } = Astro.props;
+---
+
+<div class="skill-card" style={`border-color: ${color}; box-shadow: 0 0 10px ${color}22;`}>
+  
+  <span class="name">{name}</span>
+</div>
+
+<style>
+.skill-card {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid;
+  border-radius: 999px;
+  background-color: rgba(255,255,255,0.05);
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease;
+}
+.skill-card:hover {
+  transform: translateY(-2px);
+}
+.name {
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+.icon {
+  font-size: 1rem;
+}
+</style>

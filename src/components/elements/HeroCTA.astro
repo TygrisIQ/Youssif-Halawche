@@ -1,0 +1,144 @@
+---
+interface Props {
+  primaryText: string;
+  primaryHref: string;
+  secondaryText: string;
+  secondaryHref: string;
+  secondaryExternal?: boolean;
+  thirdText?: string;
+  thirdHref?: string;
+  thirdExternal?: boolean;
+}
+
+const {
+  primaryText,
+  primaryHref,
+  secondaryText,
+  secondaryHref,
+  secondaryExternal = false,
+  thirdText,
+  thirdHref,
+  thirdExternal = false,
+} = Astro.props as Props;
+---
+
+<div class="actions">
+  <a href={primaryHref} class="btn-primary">
+    <span>{primaryText}</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </svg>
+  </a>
+
+  <a
+    href={secondaryHref}
+    class="btn-secondary"
+    target={secondaryExternal ? "_blank" : undefined}
+    rel={secondaryExternal ? "noopener noreferrer" : undefined}
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+    </svg>
+    <span>{secondaryText}</span>
+  </a>
+
+  {thirdText && thirdHref ? (
+    <a
+      href={thirdHref}
+      class="btn-tertiary"
+      target={thirdExternal ? "_blank" : undefined}
+      rel={thirdExternal ? "noopener noreferrer" : undefined}
+    >
+      <span>{thirdText}</span>
+    </a>
+  ) : null}
+</div>
+
+<style>
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, gap 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+  gap: 0.8rem;
+  box-shadow: 0 0 24px rgba(59,130,246,0.4);
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  background: rgba(255,255,255,0.05);
+  color: #cbd5e1;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.1);
+  color: #f1f5f9;
+  border-color: rgba(255,255,255,0.2);
+}
+
+.btn-tertiary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-tertiary:hover {
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-tertiary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1rem;
+    box-sizing: border-box;
+  }
+}
+</style>

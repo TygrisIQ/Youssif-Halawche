@@ -1,0 +1,42 @@
+---
+interface Props {
+    title: string;
+    number: string;
+}
+const { title, number } = Astro.props;
+---
+
+<div class="page-header">
+  <span class="number">{number}</span>
+  <span class="title">{title}</span>
+  <div class="line"></div>
+</div>
+
+<style>
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin-bottom: 3rem;
+}
+.number {
+  color: #64ffda;
+  font-weight: bold;
+  font-family: monospace;
+  white-space: nowrap;
+  font-size: xx-large;
+}
+.title {
+  color: #ccd6f6;
+  font-weight: bold;
+  font-size:xx-large;
+  font-family: monospace;
+  white-space: nowrap;
+}
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: rgba(255,255,255,0.15);
+}
+</style>
