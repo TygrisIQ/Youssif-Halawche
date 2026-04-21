@@ -30,11 +30,19 @@ const { phrases, path = "~/portfolio", branch = "main" } = Astro.props;
     const el = document.getElementById("tw");
     if (!el) return;
 
+    const cursor = el.nextElementSibling;
     let phraseIndex = 0;
     let charIndex = 0;
     let deleting = false;
     let timerId = null;
     let active = true;
+    let seen = new Set();
+
+    function done() {
+      visibilityObserver.disconnect();
+      active = false;
+      if (cursor) cursor.style.animationPlayState = 'paused';
+    }
 
     function tick() {
       if (!active) return;
@@ -43,6 +51,8 @@ const { phrases, path = "~/portfolio", branch = "main" } = Astro.props;
         charIndex++;
         el.textContent = current.slice(0, charIndex);
         if (charIndex === current.length) {
+          seen.add(phraseIndex);
+          if (seen.size === phrases.length) { done(); return; }
           deleting = true;
           timerId = setTimeout(tick, 2000);
           return;
@@ -52,9 +62,8 @@ const { phrases, path = "~/portfolio", branch = "main" } = Astro.props;
         el.textContent = current.slice(0, charIndex);
         if (charIndex === 0) {
           deleting = false;
-          let next;
-          do { next = Math.floor(Math.random() * phrases.length); } while (next === phraseIndex);
-          phraseIndex = next;
+          const unseen = phrases.map((_, i) => i).filter(i => !seen.has(i));
+          phraseIndex = unseen[Math.floor(Math.random() * unseen.length)];
         }
       }
       timerId = setTimeout(tick, deleting ? 20 : 50);

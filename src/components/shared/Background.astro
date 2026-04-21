@@ -1,6 +1,5 @@
 <div class="star-bg">
   <div class="grid-overlay"></div>
-  <div class="mouse-glow"></div>
   <div class="stars"></div>
   <div class="shooting-star"></div>
   <div class="shooting-star"></div>
@@ -27,16 +26,6 @@ body {
   height: 100%;
   z-index: -1;
   pointer-events: none;
-}
-
-.mouse-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(59, 130, 246, 0.07),
-    transparent 60%
-  );
 }
 
 .grid-overlay {
