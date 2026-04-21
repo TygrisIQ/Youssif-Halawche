@@ -59,12 +59,22 @@ const resumeUrl = `${import.meta.env.BASE_URL}/resume.pdf`;
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  const setActive = () => {
-    const sections = ['hero', 'about', 'projects', 'contact'];
-    let current = 'hero';
-    sections.forEach(id => {
+  const sectionIds = ['hero', 'about', 'projects', 'contact'];
+  let sectionTops = {};
+
+  const cacheSectionTops = () => {
+    sectionIds.forEach(id => {
       const el = document.getElementById(id);
-      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+      if (el) sectionTops[id] = el.offsetTop;
+    });
+  };
+  cacheSectionTops();
+  window.addEventListener('resize', cacheSectionTops, { passive: true });
+
+  const setActive = () => {
+    let current = 'hero';
+    sectionIds.forEach(id => {
+      if (window.scrollY >= (sectionTops[id] ?? 0) - 120) current = id;
     });
     [...links, ...mobileLinks].forEach(link => {
       link.classList.toggle('active', link.getAttribute('href') === `#${current}`);

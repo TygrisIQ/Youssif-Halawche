@@ -24,17 +24,28 @@ const { text, color = "#10B981" } = Astro.props;
 }
 
 .pulse {
+  position: relative;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
-  animation: pulse-animation 2s infinite;
+  will-change: transform;
 }
 
-@keyframes pulse-animation {
-  0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0.7); }
-  70%  { transform: scale(1);    box-shadow: 0 0 0 6px rgba(16,185,129,0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+.pulse::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  animation: pulse-ring 2s ease-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.5); opacity: 0.6; }
+  100% { transform: scale(2);   opacity: 0; }
 }
 
 .status-text {

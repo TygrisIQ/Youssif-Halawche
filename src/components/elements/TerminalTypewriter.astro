@@ -33,15 +33,18 @@ const { phrases, path = "~/portfolio", branch = "main" } = Astro.props;
     let phraseIndex = 0;
     let charIndex = 0;
     let deleting = false;
+    let timerId = null;
+    let active = true;
 
     function tick() {
+      if (!active) return;
       const current = phrases[phraseIndex];
       if (!deleting) {
         charIndex++;
         el.textContent = current.slice(0, charIndex);
         if (charIndex === current.length) {
           deleting = true;
-          setTimeout(tick, 2000);
+          timerId = setTimeout(tick, 2000);
           return;
         }
       } else {
@@ -54,10 +57,24 @@ const { phrases, path = "~/portfolio", branch = "main" } = Astro.props;
           phraseIndex = next;
         }
       }
-      setTimeout(tick, deleting ? 20 : 50);
+      timerId = setTimeout(tick, deleting ? 20 : 50);
     }
 
-    setTimeout(tick, 500);
+    const visibilityObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          active = true;
+          if (timerId === null) timerId = setTimeout(tick, 50);
+        } else {
+          active = false;
+          clearTimeout(timerId);
+          timerId = null;
+        }
+      });
+    }, { threshold: 0 });
+
+    visibilityObserver.observe(el.closest('.terminal') || el);
+    timerId = setTimeout(tick, 500);
   });
 </script>
 
@@ -123,6 +140,7 @@ const { phrases, path = "~/portfolio", branch = "main" } = Astro.props;
   color: #3B82F6;
   font-weight: bold;
   animation: blink 1s step-end infinite;
+  will-change: opacity;
 }
 
 @keyframes blink {

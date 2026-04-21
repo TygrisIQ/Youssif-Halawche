@@ -4,7 +4,6 @@
   <div class="stars"></div>
   <div class="shooting-star"></div>
   <div class="shooting-star"></div>
-  <div class="shooting-star"></div>
 </div>
 
 
@@ -55,6 +54,7 @@ body {
   height: 1px;
   position: absolute;
   background: white;
+  will-change: opacity;
   box-shadow: 2vw 5vh 2px white, 10vw 8vh 2px white, 15vw 15vh 1px white,
     22vw 22vh 1px white, 28vw 12vh 2px white, 32vw 32vh 1px white,
     38vw 18vh 2px white, 42vw 35vh 1px white, 48vw 25vh 2px white,
@@ -77,6 +77,7 @@ body {
   height: 2px;
   background: linear-gradient(90deg, white, transparent);
   animation: shoot 3s infinite ease-in;
+  will-change: transform, opacity;
 }
 
 .shooting-star:nth-child(1) {
@@ -123,6 +124,7 @@ body {
   width: 1px;
   height: 1px;
   background: white;
+  will-change: opacity;
   box-shadow: 8vw 12vh 2px white, 16vw 18vh 1px white, 24vw 25vh 2px white,
     33vw 15vh 1px white, 41vw 28vh 2px white, 49vw 35vh 1px white,
     57vw 22vh 2px white, 65vw 42vh 1px white, 73vw 28vh 2px white,
