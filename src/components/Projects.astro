@@ -1,7 +1,6 @@
 ---
 import PageHeader from "./elements/PageHeader.astro"
 import ProjectCard from "./elements/ProjectCard.astro"
-import eup from "../assets/astro.svg"
 ---
 <section id="projects">
   <PageHeader title="Projects" number="02."/>
@@ -11,7 +10,7 @@ import eup from "../assets/astro.svg"
       description="A fully-featured 3D rendering engine built from scratch in Rust. No game engine, no shortcuts — raw OpenGL, custom scene graph, and memory-safe design. A project about understanding the machine."
       tags={["Rust", "OpenGL", "GLFW", "glow"]}
       github="https://github.com/TygrisIQ/euphrates_engine"
-      image="/screenshots/eup.webp"
+      image={`${import.meta.env.BASE_URL}/screenshots/eup.webp`}
       featured={true}
     />
     <ProjectCard
@@ -19,7 +18,7 @@ import eup from "../assets/astro.svg"
       description="A virtual joystick system bridging a Kotlin/Java Android app with a Rust server over TCP/UDP. The server injects analog input directly into the Linux kernel via the Uinput interface — the OS sees it as a real controller."
       tags={["Rust", "Linux", "Uinput", "Kotlin", "Android", "TCP/UDP"]}
       github="https://github.com/TygrisIQ"
-      image="/screenshots/playport.webp"
+      image={`${import.meta.env.BASE_URL}/screenshots/playport.webp`}
     />
     <ProjectCard
       title="SecondPulse"
