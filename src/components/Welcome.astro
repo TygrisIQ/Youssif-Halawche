@@ -1,69 +1,45 @@
 ---
-import astroLogo from '../assets/astro.svg';
-import background from '../assets/background.svg';
 import Hero from '../components/Hero.astro';
 import Projects from '../components/Projects.astro';
 import Contact from '../components/Contact.astro';
 import Navbar from '../components/shared/Navbar.astro';
-import Background from './shared/Background.astro';
-import About from './About.astro';
+import Background from '../components/shared/Background.astro';
+import About from '../components/About.astro';
+import Footer from '../components/Footer.astro';
 ---
-  	<Background />
-    <Navbar />
 
+<Background />
+<Navbar />
 <div id="container">
-    <Hero />
-    <About />
-    <Projects />
-    <Contact />
-
+  <Hero />
+  <About />
+  <Projects />
+  <Contact />
+  <Footer />
 </div>
 
-
-
-
-
-
 <style>
-	body {
-    background-color: #0a192f;
-    color: #ccd6f6;
-    margin: 0;
-    /* This creates the "flashlight" effect layer */
-    /* background-image: radial-gradient(
-        600px at var(--mouse-x) var(--mouse-y), 
-        rgba(29, 78, 216, 0.15), 
-        transparent 90%
-        
-    ); */
-    background-attachment: fixed; /* Keeps it locked to viewport */
+body {
+  background-color: #0b0b2b;
+  color: #ccd6f6;
+  margin: 0;
 }
-
-#container{
-		 max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 4rem;
-    box-sizing: border-box;
-    min-height: 100vh;
-	}
-	/* #container{
-		width: 100%;
-		min-height: 100vh;
-    padding: 0rem 4rem;
-    box-sizing: border-box;
-} */
+#container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 4rem;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+@media (max-width: 768px) {
+  #container { padding: 0 1.5rem; }
+}
 </style>
-<script is:inline>
-  // This is the "Server" listening for input
-  const updateMousePosition = (e) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    
-    // Send the coordinates to the CSS variables
-    document.body.style.setProperty('--mouse-x', `${x}px`);
-    document.body.style.setProperty('--mouse-y', `${y}px`);
-  }
 
-  // Attach the listener
+<script is:inline>
+  const updateMousePosition = (e) => {
+    document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
+    document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
+  };
   window.addEventListener('mousemove', updateMousePosition);
 </script>

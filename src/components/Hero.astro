@@ -1,110 +1,78 @@
 ---
-import SkillCard from "./elements/SkillCard.astro"
+import StatusBadge from "./elements/StatusBadge.astro"
+import TerminalTypewriter from "./elements/TerminalTypewriter.astro"
+import HeroCTA from "./elements/HeroCTA.astro"
+
+const phrases = [
+  "I design highly scalable database schemas.",
+  "I enforce strict clean architecture.",
+  "I engineer industrial-grade platforms.",
+  "I write memory-safe Rust.",
+  "I architect secure-by-design APIs.",
+  "I think latency is a bug.",
+];
 ---
 
 <section id="hero">
-  <div class="hero">
-    <div class="hi"> Hi, my name is</div>
-    <h2>YOUSSIF AL-HALAWCHE</h2>
-    <p class="typewriter">
-      <span id="tw"></span><span class="cursor">|</span>
+  <div class="hero-content">
+    <StatusBadge text="Available Now" />
+    <h1 class="name">
+      Youssif<br />
+      <span class="last-name">Akkad.</span>
+    </h1>
+    <TerminalTypewriter phrases={phrases} path="~/portfolio" branch="main" />
+    <p class="subtitle">
+      Developer experienced in backend development, REST APIs, and Linux-based tooling.
     </p>
-    <SkillCard name="Rust"   color="#f74c00"  />
+    <HeroCTA
+      primaryText="View Projects"
+      primaryHref="#projects"
+      secondaryText="GitHub"
+      secondaryHref="https://github.com/TygrisIQ"
+      secondaryExternal={true}
+      thirdText="Get In Touch"
+      thirdHref="#contact"
+    />
   </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-<script is:inline>
-const phrases = [
-  "I focus on correctness first.",
-  "I build with intent.",
-  "I write code that scales",
-  "I build reliable systems.",
-  "I design highly scalable database schemas.",
-  "I make things render fast.",
-  "I architect secure-by-design platforms..",
-  "I think latency is a bug.",
-
-];
-
-let phraseIndex = 0;
-let charIndex = 0;
-let deleting = false;
-const el = document.getElementById("tw");
-
-const prefix = "I ";
-
-function tick() {
-  const current = phrases[phraseIndex];
-
-  if (!deleting) {
-    charIndex++;
-    el.textContent = current.slice(0, charIndex);
-    if (charIndex === current.length) {
-      deleting = true;
-      setTimeout(tick, 1800);
-      return;
-    }
-  } else {
-    charIndex--;
-    el.textContent = current.slice(0, charIndex);
-    if (charIndex === prefix.length) {
-      deleting = false;
-      let next;
-      do { next = Math.floor(Math.random() * phrases.length); } while (next === phraseIndex);
-      phraseIndex = next;
-      charIndex = prefix.length;
-    }
-  }
-
-  setTimeout(tick, deleting ? 10 : 30);
-}
-
-charIndex = prefix.length;
-tick();
-</script>
-
 <style>
-  .hi{
-    color: chocolate;
-  }
 section {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  padding-top: 5rem;
+  scroll-margin-top: 5rem;
 }
-.hero {
+.hero-content {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.8rem;
+  max-width: 800px;
+  width: 100%;
 }
-.hero h2 {
-  font-size: 3.5rem;
-  font-weight: bold;
-  color: #ffffff;
+.name {
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
+  font-weight: 800;
+  color: #f8fafc;
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.last-name {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #94a3b8;
+}
+.subtitle {
+  font-size: 1.05rem;
+  color: #64748b;
+  max-width: 580px;
+  line-height: 1.75;
   margin: 0;
 }
-.hero p {
-  font-size: 1.2rem;
-  color: rgba(255,255,255,0.5);
-  margin: 0;
-}
-.typewriter {
-  color: rgba(255,255,255,0.75) !important;
-}
-.cursor {
-  animation: blink 0.7s infinite;
-}
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+@media (max-width: 600px) {
+  section { padding-top: 5rem; align-items: flex-start; padding-bottom: 3rem; min-height: 100svh; }
+  .hero-content { gap: 1.1rem; }
+  .subtitle { font-size: 0.9rem; line-height: 1.7; }
 }
 </style>

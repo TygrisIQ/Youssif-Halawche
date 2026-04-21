@@ -1,76 +1,278 @@
-
+---
+const resumeUrl = "/temp.pdf";
+---
 
 <div class="header-parent">
-<header>
+  <header>
     <h2 class="logo">
-    <a href="#hero">&lt;YH /&gt; </a> 
-  </h2>
+      <a href="#hero">&lt;YH /&gt;</a>
+    </h2>
 
-    <div class="elements">
-        <a href="#hero"> Home</a>
-        <a href="#about"> About</a>
-        <a href="#projects"> Projects</a>
-        <a href="#contact"> Contact</a>
+    <div class="elements-and-button">
+      <nav class="elements">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="divider"></div>
+      <div class="button">
+        <a href={resumeUrl} target="_blank" rel="noopener noreferrer" class="resume-btn">
+          Resume
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </a>
+      </div>
     </div>
-</header>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav class="mobile-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href={resumeUrl} target="_blank" rel="noopener noreferrer" class="mobile-resume">
+      Resume
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+    </a>
+  </div>
 </div>
 
+<script is:inline>
+  const links = document.querySelectorAll('.elements a');
+  const mobileLinks = document.querySelectorAll('.mobile-links a');
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  const setActive = () => {
+    const sections = ['hero', 'about', 'projects', 'contact'];
+    let current = 'hero';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    [...links, ...mobileLinks].forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+    });
+  };
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', isOpen);
+    hamburger.classList.toggle('open', isOpen);
+  });
+
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+    });
+  });
+
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+</script>
+
 <style>
-
-    .header-parent{
-        width: 100%;
-        top:0;
-        z-index: 50;
-        
-        position: sticky;
-    }
-    header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 3rem;
-
-    background-color: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(10px);
-    
-    /* safari compat*/
-    -webkit-backdrop-filter: blur(10px);
-
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+.header-parent {
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 50;
 }
-    
-    .elements{
-        display: flex;
-        gap: 2rem;
-    }
-    .elements a{
-        color: #ffffff;
-        text-decoration: none;
-        /* link hitbox expanding */
-        padding: 0.4rem 0.8rem;
 
-        border-radius: 10px;
-        transition: opacity 0.2s ease;
-    }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 3rem;
+  background-color: rgba(9,12,26,0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
 
-    .elements a:hover{
-        opacity: 0.7;
-        color: chocolate;
+.logo {
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 2px;
+  font-size: 1rem;
+}
 
-    }
-    .logo a{
-        color: #ffffff;
-        text-decoration: none;
-    }
-    .logo a:hover{
-        opacity: 0.7;
-        color: chocolate;
-    }
-    .logo{
-        font-weight: bolder;
-        color: #ffffff;
-        margin: 0;
-        letter-spacing: 2px;
-        
-     }
+.logo a {
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Fira Code', monospace;
+  transition: color 0.2s ease;
+}
+
+.logo a:hover { color: #64ffda; }
+
+.elements-and-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.elements {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.elements a {
+  color: #475569;
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s ease, background 0.2s ease;
+  position: relative;
+}
+
+.elements a:hover {
+  color: #e2e8f0;
+  background: rgba(255,255,255,0.05);
+}
+
+.elements a.active { color: #e2e8f0; }
+
+.elements a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #64ffda;
+}
+
+.divider {
+  width: 1px;
+  height: 1.2rem;
+  background: rgba(255,255,255,0.08);
+}
+
+.button { display: flex; align-items: center; }
+
+.resume-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  background: transparent;
+  color: #64ffda;
+  border: 1px solid rgba(100,255,218,0.3);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-family: 'Fira Code', monospace;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resume-btn:hover {
+  background: rgba(100,255,218,0.06);
+  border-color: rgba(100,255,218,0.6);
+  box-shadow: 0 0 12px rgba(100,255,218,0.1);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #94a3b8;
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.5rem;
+  background: rgba(9,12,26,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.mobile-menu.open { display: flex; }
+
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mobile-links a {
+  color: #475569;
+  text-decoration: none;
+  padding: 0.65rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease, background 0.2s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.mobile-links a:last-child { border-bottom: none; }
+.mobile-links a:hover { color: #e2e8f0; }
+.mobile-links a.active { color: #e2e8f0; }
+
+.mobile-resume {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.5rem;
+  color: #64ffda;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  text-decoration: none;
+  border: 1px solid rgba(100,255,218,0.2);
+  border-radius: 6px;
+  justify-content: center;
+}
+
+@media (max-width: 700px) {
+  header { padding: 0.85rem 1.5rem; }
+  .elements-and-button { display: none; }
+  .hamburger { display: flex; }
+}
 </style>

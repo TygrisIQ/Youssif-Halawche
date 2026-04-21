@@ -1,22 +1,304 @@
 ---
-import PageHeader from "./elements/PageHeader.astro"
+import PageHeader from "./elements/PageHeader.astro";
+
+const email = "YoussifHalawche@gmail.com";
+const githubUrl = "https://github.com/TygrisIQ";
+const linkedInUrl = "https://linkedin.com/in/yourprofile";
+
+const availability = [
+  { label: "Location", value: "Calgary, AB (open to remote)" },
+  { label: "Focus", value: "Systems + backend + graphics" },
+  { label: "Now", value: "Actively interviewing" },
+];
 ---
 
-<section id="contact">
-    <PageHeader title="Contact" number="3."/>
+<section id="contact" aria-labelledby="contact-title">
+  <PageHeader title="Contact" number="3." />
+
+  <div class="contact-body">
+    <div class="copy">
+      <h2 id="contact-title" class="title">Let's build something that ships.</h2>
+      <p class="lead">
+        I'm currently looking for new opportunities. If you have a role that needs
+        disciplined engineering — clean architecture, reliable delivery, and performance-first thinking — send me a message.
+        I reply fast and I'm easy to work with.
+      </p>
+      <div class="chips" aria-label="Availability highlights">
+        {availability.map((item) => (
+          <span class="chip">
+            <span class="chip-label">{item.label}:</span>
+            <span class="chip-value">{item.value}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a class="contact-btn" href={`mailto:${email}?subject=${encodeURIComponent("Hello — opportunity / question")}`}>
+        <span>Say Hello</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M22 2 11 13"/>
+          <path d="M22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </a>
+
+      <div class="secondary-cta">
+        <span class="hint">Prefer DMs?</span>
+        <div class="socials" role="list">
+          <a role="listitem" class="social-link" href={githubUrl} target="_blank" rel="noopener noreferrer">
+            <span class="dot" aria-hidden="true"></span>
+            GitHub
+          </a>
+          <a role="listitem" class="social-link" href={linkedInUrl} target="_blank" rel="noopener noreferrer">
+            <span class="dot" aria-hidden="true"></span>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-row">
+      <div class="mini">
+        <span class="mini-label">Email</span>
+        <a class="mini-value" href={`mailto:${email}`}>{email}</a>
+      </div>
+      <div class="divider" aria-hidden="true"></div>
+      <div class="mini">
+        <span class="mini-label">Response time</span>
+        <span class="mini-value">Same day (usually)</span>
+      </div>
+      <div class="divider" aria-hidden="true"></div>
+      <div class="mini">
+        <span class="mini-label">Timezone</span>
+        <span class="mini-value">America/Edmonton</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
-section {
-    min-height: 40vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#contact {
+  position: relative;
+  min-height: 48vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4.25rem 0;
+  scroll-margin-top: 6rem;
 }
 
-h2 {
-    font-size: 2rem;
-    color: #ffffff;
-    margin: 0;
+#contact::before {
+  content: "";
+  position: absolute;
+  inset: -1rem;
+  background:
+    radial-gradient(600px 240px at 12% 25%, rgba(59,130,246,0.10), transparent 60%),
+    radial-gradient(520px 220px at 92% 30%, rgba(100,255,218,0.08), transparent 60%),
+    radial-gradient(520px 260px at 60% 85%, rgba(148,163,184,0.05), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+  max-width: 820px;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+  letter-spacing: -0.02em;
+  color: #e2e8f0;
+  line-height: 1.2;
+}
+
+.lead {
+  color: #64748b;
+  font-size: 0.97rem;
+  line-height: 1.9;
+  margin: 0;
+  max-width: 72ch;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.3rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(8px);
+}
+
+.chip-label {
+  color: #64748b;
+  font-size: 0.76rem;
+  font-weight: 600;
+  font-family: 'Fira Code', monospace;
+}
+
+.chip-value {
+  color: #94a3b8;
+  font-size: 0.76rem;
+}
+
+.cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  padding: 0.9rem 1.5rem;
+  border: 1px solid rgba(100,255,218,0.4);
+  border-radius: 10px;
+  color: #64ffda;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.86rem;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  background: linear-gradient(180deg, rgba(100,255,218,0.04), rgba(100,255,218,0.01));
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.contact-btn:hover {
+  background: linear-gradient(180deg, rgba(100,255,218,0.09), rgba(100,255,218,0.02));
+  border-color: rgba(100,255,218,0.8);
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 5px rgba(100,255,218,0.07);
+}
+
+.contact-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 5px rgba(59,130,246,0.2);
+}
+
+.secondary-cta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hint {
+  color: #334155;
+  font-size: 0.82rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.socials {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.02);
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.social-link:hover {
+  color: #e2e8f0;
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.10);
+  transform: translateY(-1px);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(100,255,218,0.5);
+  box-shadow: 0 0 0 3px rgba(100,255,218,0.07);
+}
+
+.footer-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 1.1rem 1.3rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.015);
+}
+
+.mini {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mini-label {
+  color: #334155;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: 'Fira Code', monospace;
+}
+
+.mini-value {
+  color: #94a3b8;
+  font-size: 0.87rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a.mini-value:hover {
+  color: #64ffda;
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background: rgba(255,255,255,0.06);
+}
+
+@media (max-width: 600px) {
+  #contact { padding: 3rem 0; }
+  .cta-row { flex-direction: column; align-items: flex-start; }
+  .contact-btn { width: 100%; justify-content: center; }
+  .secondary-cta { width: 100%; }
+  .divider { display: none; }
+  .footer-row { gap: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-btn, .social-link { transition: none; }
 }
 </style>
